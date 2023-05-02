@@ -28,99 +28,107 @@ class Home extends StatelessWidget {
             SizedBox(width: 10,),
           ],
         ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              Center(
-                child: Container(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width *0.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.red,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Get your special sale up to 50%",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 0.5
-                                 
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.white,
-                              ),
-                              child: InkWell(
-                                onTap: (){},
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                                  child: const Text(
-                                    "Shop Now!",
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold
-                                    ),
-                                  )
+        body: SingleChildScrollView(
+
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                Center(
+                  child: Container(
+                    height: 150,
+                    width: MediaQuery.of(context).size.width *0.9,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.red,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Get your special sale up to 50%",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 0.5
+                                   
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Image.network(
-                          "https://cdn-icons-png.flaticon.com/512/3081/3081648.png",
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.white,
+                                ),
+                                child: InkWell(
+                                  onTap: (){},
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                                    child: const Text(
+                                      "Shop Now!",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    )
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                      )
-                    ],
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: Image.network(
+                            "https://cdn-icons-png.flaticon.com/512/3081/3081648.png",
+                            ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              const TabBar(
-                isScrollable: true,
-                indicatorColor: Colors.black,
-                unselectedLabelStyle: TextStyle(
-                  color: Colors.blueGrey,
+                const SizedBox(height: 20,),
+                const TabBar(
+                  isScrollable: true,
+                  
+                  indicatorColor: Colors.black,
+                  unselectedLabelStyle: TextStyle(
+                    color: Colors.blueGrey,
+                  ),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  tabs:  [
+                    Text(style: TextStyle(color: Colors.black), "All"),
+                    Text(style: TextStyle(color: Colors.black), "Newest"),
+                    Text(style: TextStyle(color: Colors.black), "Popular"),
+                    Text(style: TextStyle(color: Colors.black), "Man"),
+                    Text(style: TextStyle(color: Colors.black), "Woman")
+                  ],
                 ),
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs:  [
-                  Text(style: TextStyle(color: Colors.black), "All"),
-                  Text(style: TextStyle(color: Colors.black), "Newest"),
-                  Text(style: TextStyle(color: Colors.black), "Popular"),
-                  Text(style: TextStyle(color: Colors.black), "Man"),
-                  Text(style: TextStyle(color: Colors.black), "Woman")
-                ],
-              ),
-              const SizedBox(height: 20,),
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  children: productInfos.map(
-                    (e) => Product(info: e)
-                  ).toList(),
-                ),
-              )
-            ],
+                const SizedBox(height: 20,),
+                GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.65
+                  ),
+                  itemCount: productInfos.length,
+                  itemBuilder: (context, index) {
+                    return Product(info: productInfos[index]);
+                  },
+                )
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: Padding(
@@ -169,16 +177,22 @@ class Product extends StatelessWidget {
             Stack(
               children: [
                 Container(
+                  height: 200,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.grey,
+                    image: DecorationImage(image: NetworkImage(info.image), fit: BoxFit.cover)
                   ),
-                  child: Image.network(
-                    info.image, 
-                    width: MediaQuery.of(context).size.width * 0.2, 
-                    fit: BoxFit.cover, 
-                    alignment: Alignment.center
-                  ),
+                
+                  // child: ClipRRect(
+                  //   borderRadius:BorderRadius.circular(20) ,
+                  //   child: Image.network(
+                  //     info.image, 
+                  //     width: MediaQuery.of(context).size.width * 0.2, 
+                  //     fit: BoxFit.cover, 
+                  //     alignment: Alignment.center
+                  //   ),
+                  // ),
                 ),
                 Positioned(
                   right: 0,
